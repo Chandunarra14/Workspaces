@@ -1,0 +1,616 @@
+<title>DQ Utilization Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap">
+<style>
+/* Layout: fixed navy header, left chapter list, one chapter at a time. Each visual chapter = sample picture, then three plain-language blocks. */
+:root{
+  --bg:#F3F6F8; --surface:#FFFFFF; --ink:#14283A; --muted:#566878; --line:#D9E1E8; --soft:#EAF0F4;
+  --navy:#0B3C5D; --accent:#0082C8; --good:#2F7D32; --warn:#B86E00; --bad:#B02A1E;
+  --c-ms:#0082C8; --c-rev:#004065; --c-comp:#1FB5A8; --c-sga:#5A9416; --c-int:#E07B00; --c-se:#7B4FA3; --c-adm:#7A8894; --c-pto:#8D5B3E;
+  --t-target:#004065; --t-non:#E07B00; --t-admin:#7A8894;
+  --f-body:"Public Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  --f-num:"Source Serif 4",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0D1822; --surface:#142431; --ink:#E5EDF3; --muted:#97A9B8; --line:#26394A; --soft:#1B3042;
+  --navy:#0B3C5D; --accent:#3AA4E0; --good:#6DBF72; --warn:#E3A33A; --bad:#EF7568;
+  --c-ms:#2E9BDB; --c-rev:#3A86B8; --c-comp:#2CC7B9; --c-sga:#7DB535; --c-int:#F0932B; --c-se:#9A74C4; --c-adm:#8E9CA8; --c-pto:#B5805E;
+  --t-target:#3A86B8; --t-non:#F0932B; --t-admin:#8E9CA8; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0D1822; --surface:#142431; --ink:#E5EDF3; --muted:#97A9B8; --line:#26394A; --soft:#1B3042;
+  --navy:#0B3C5D; --accent:#3AA4E0; --good:#6DBF72; --warn:#E3A33A; --bad:#EF7568;
+  --c-ms:#2E9BDB; --c-rev:#3A86B8; --c-comp:#2CC7B9; --c-sga:#7DB535; --c-int:#F0932B; --c-se:#9A74C4; --c-adm:#8E9CA8; --c-pto:#B5805E;
+  --t-target:#3A86B8; --t-non:#F0932B; --t-admin:#8E9CA8; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 40px}
+.top{margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding:14px max(16px,env(safe-area-inset-left,0px));background:var(--navy);color:#fff;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.top b{font-size:17px;letter-spacing:.01em}.top span{font-size:13px;opacity:.8}
+.wrap{max-width:1120px;margin:22px auto 0;display:grid;grid-template-columns:230px minmax(0,1fr);gap:28px;align-items:start}
+nav{position:sticky;top:16px;display:flex;flex-direction:column;gap:2px}
+nav .grp{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:14px 0 4px 10px}
+nav .grp:first-child{margin-top:0}
+nav a{color:var(--ink);text-decoration:none;padding:7px 10px;border-radius:6px;font-size:14px;display:block;border-left:3px solid transparent}
+nav a:hover{background:var(--soft)}
+nav a[aria-current="page"]{background:var(--surface);border-left-color:var(--accent);font-weight:600}
+nav a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+main{min-width:0}
+section[hidden]{display:none}
+h1{font-size:30px;line-height:1.15;margin:0 0 6px;text-wrap:balance}
+.lede{font-size:17px;color:var(--muted);margin:0 0 22px;max-width:62ch}
+h2{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:0 0 6px}
+p{margin:0 0 10px;max-width:68ch}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px 20px;margin-bottom:16px;min-width:0}
+.panel.pic{padding:16px 18px 12px}
+.cap{font-size:12px;color:var(--muted);margin-top:8px}
+.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.cols .panel{margin:0}
+.rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:16px}
+.rules .panel{margin:0}
+.rules .n{font-family:var(--f-num);font-size:34px;font-weight:700;color:var(--accent);line-height:1}
+.rules h3{margin:6px 0 4px;font-size:15px}
+.story{border-left:4px solid var(--accent)}
+.story h3{margin:0 0 4px;font-size:15px}
+.when{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:16px}
+.when .panel{margin:0;border-left:4px solid var(--warn)}
+.when h3{margin:0 0 4px;font-size:15px}
+.when .big{font-family:var(--f-num);font-size:20px;font-weight:700;margin-bottom:6px}
+.eg{background:var(--soft);border-radius:6px;padding:10px 12px;font-size:14px;margin-top:6px}
+/* bars */
+.row{display:grid;grid-template-columns:96px minmax(0,1fr) 34px;gap:10px;align-items:center;margin:7px 0}
+.row .l{font-size:13px;color:var(--muted);text-align:right}
+.bar{display:flex;height:34px;border-radius:3px;overflow:hidden}
+.bar i{display:flex;align-items:center;justify-content:center;font-style:normal;font-size:12px;font-weight:600;color:#fff;min-width:0}
+.bar i.bench{background:var(--surface)!important;color:var(--bad);border:2px solid var(--bad);border-radius:3px}
+.row .t{font-size:12px;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--muted);margin-top:10px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend u{width:12px;height:12px;border-radius:2px;display:inline-block;text-decoration:none}
+.legend u.bench{border:2px solid var(--bad);background:var(--surface)}
+.scroll{overflow-x:auto}
+/* KPI mini cards */
+.kpi{display:grid;grid-template-columns:150px minmax(0,1fr);gap:18px;padding:16px 0;border-top:1px solid var(--line)}
+.kpi:first-of-type{border-top:0;padding-top:4px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;text-align:center;padding:10px 6px 8px;height:fit-content}
+.card .nm{font-size:11px;font-weight:600}
+.card .v{font-family:var(--f-num);font-size:34px;font-weight:700;line-height:1.1;margin:6px 0 2px}
+.card .s{font-size:10.5px;color:var(--muted)}
+.v.g{color:var(--good)}.v.w{color:var(--warn)}.v.b{color:var(--bad)}.v.n{color:var(--ink)}
+.kpi h3{margin:0 0 4px;font-size:16px}
+.kpi dl{margin:6px 0 0;display:grid;grid-template-columns:90px minmax(0,1fr);gap:4px 12px;font-size:14px}
+.kpi dt{color:var(--muted);font-weight:600}.kpi dd{margin:0}
+/* distribution */
+.dist{display:flex;align-items:flex-end;gap:7px;height:230px;position:relative;min-width:560px;padding-top:6px}
+.dist .col{flex:1;display:flex;flex-direction:column-reverse;height:100%;position:relative}
+.dist .col i{display:block}
+.dist .goal{position:absolute;left:0;right:0;border-top:2px dashed var(--muted);pointer-events:none}
+.dist .goal span{position:absolute;right:0;top:-18px;font-size:11px;color:var(--muted);background:var(--surface);padding:0 4px}
+.names{display:flex;gap:7px;min-width:560px;margin-top:4px}
+.names span{flex:1;text-align:center;font-size:11px;color:var(--muted)}
+.mix{display:flex;align-items:flex-end;gap:14px;height:200px;min-width:560px;border-bottom:1px solid var(--line)}
+.mix .g{flex:1;display:flex;align-items:flex-end;justify-content:center;gap:3px;height:100%}
+.mix .g i{width:100%;max-width:20px;display:flex;justify-content:center;font-style:normal;font-size:11px;font-weight:600;color:var(--ink);align-items:flex-start;padding-top:0}
+.lab{display:flex;gap:14px;min-width:560px;margin-top:6px}
+.lab span{flex:1;min-width:0;text-align:center;font-size:11px;color:var(--muted);line-height:1.2}
+.pn{font-size:12px;padding-top:0}
+svg text{fill:var(--muted);font-family:var(--f-body)}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:22px}
+.pager button{font:inherit;font-weight:600;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:9px 16px;cursor:pointer}
+.pager button:hover{border-color:var(--accent)}
+.pager button[disabled]{opacity:.35;cursor:default}
+dl.gl{display:grid;grid-template-columns:200px minmax(0,1fr);gap:0 20px;margin:0}
+dl.gl dt{font-weight:700;padding:10px 0;border-top:1px solid var(--line)}
+dl.gl dd{margin:0;padding:10px 0;border-top:1px solid var(--line)}
+@media (max-width:860px){
+  .wrap{grid-template-columns:minmax(0,1fr);gap:14px;margin-top:14px}
+  nav{position:static;flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:6px}
+  nav .grp{display:none}
+  nav a{white-space:nowrap;border:1px solid var(--line);border-left-width:1px;background:var(--surface);border-radius:20px;padding:6px 12px;font-size:13px}
+  nav a[aria-current="page"]{border-color:var(--accent)}
+  .cols,.rules,.when{grid-template-columns:minmax(0,1fr)}
+  .kpi{grid-template-columns:minmax(0,1fr)}
+  .card{max-width:170px}
+  dl.gl{grid-template-columns:minmax(0,1fr)}
+  dl.gl dt{border-bottom:0;padding-bottom:0}dl.gl dd{border-top:0;padding-top:2px}
+  .row{grid-template-columns:70px minmax(0,1fr) 28px;gap:6px}
+  h1{font-size:25px}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+<style>
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:3px 10px;border-radius:12px;border:1px solid var(--line);background:var(--surface)}
+.chip u{width:10px;height:10px;border-radius:50%;display:inline-block}
+table.t{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
+table.t th{text-align:left;color:var(--muted);font-weight:600;padding:7px 8px;border-bottom:1px solid var(--line)}
+table.t td{padding:7px 8px;border-top:1px solid var(--line)}
+.blk{padding-top:22px;margin-top:22px;border-top:1px solid var(--line)}
+.blk:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.blk h3{margin:0 0 2px;font-size:19px}
+.blk .sub{color:var(--muted);font-size:13px;margin:0 0 12px}
+.note{font-size:12.5px;color:var(--muted)}
+.cols.four{grid-template-columns:repeat(2,minmax(0,1fr))}.panel.calc{border-top:3px solid var(--accent)}.panel.calc .eg{margin-top:8px}
+.ycards{display:grid;grid-template-columns:1.25fr repeat(5,minmax(0,1fr));gap:8px}
+.ycards4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.ycards .card .v,.ycards4 .card .v{font-size:26px}
+.ycards .tot{grid-row:span 2;display:flex;flex-direction:column;justify-content:center;border:2px solid var(--navy)}
+.ycards .tot .v{font-size:38px}
+.bands{display:flex;align-items:flex-end;gap:14px;height:200px;border-bottom:1px solid var(--line);padding:0 8px}
+.bands div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;font-size:11px;color:var(--muted)}
+.bands i{display:block;width:100%;max-width:90px;font-style:normal;text-align:center;color:#fff;font-weight:700;font-size:12px;padding-top:4px}
+.bandl{display:flex;gap:14px;padding:4px 8px 0}.bandl span{flex:1;text-align:center;font-size:11px;color:var(--muted)}
+@media (max-width:860px){.cols.four{grid-template-columns:minmax(0,1fr)}.ycards{grid-template-columns:repeat(2,minmax(0,1fr))}.ycards .tot{grid-row:auto;grid-column:span 2}.ycards4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+
+<div class="top"><b>DQ Utilization Guide</b><span>How to read the Individual and Team pages</span></div>
+<div class="wrap">
+<nav id="nav" aria-label="Guide chapters"></nav>
+<main id="main">
+
+<section id="targets" data-t="Targets by role" data-g="Reference" hidden>
+  <h1>Targets by role</h1>
+  <p class="lede">Every role has a planned split of its target hours. The goal is always 80% of available hours. The role decides how that goal is divided between work areas.</p>
+  <div class="panel"><div class="scroll"><table class="t" style="min-width:600px"><thead><tr><th>Role</th><th>Revenue Project</th><th>Managed Services</th><th>DQ Internal Projects</th><th>DQ Sustained Engineering</th><th>SG&amp;A</th></tr></thead><tbody id="roletable"></tbody></table></div>
+  <p class="cap">Each row adds up to 100% of that role's target work. COMPed has no target for any role.</p></div>
+  <div class="cols">
+    <div class="panel"><h2>How it turns into hours</h2><div class="eg">Chandler is in Field Operations: 40% Revenue Project and 60% Managed Services. Available 40 hours, goal 32. That plans 12.8 hours of Revenue Project and 19.2 of Managed Services. Admin is planned at 20% of available, 8 hours.</div></div>
+    <div class="panel"><h2>With PTO</h2><p>The split applies to available hours after PTO.</p><div class="eg">With a PTO day, available is 32 and the goal is 25.6. Field Operations plans 10.2 Revenue Project and 15.4 Managed Services.</div></div>
+    <div class="panel"><h2>Where you see it</h2><p>The gray Planned bars in Target mix, and the plan behind Mix Alignment. Target Attainment uses the flat 80% goal.</p><p style="margin:0">A role that is not in this table has no targets, so its target work shows as 0.</p></div>
+  </div>
+</section>
+<section id="cats" data-t="How time categories are set" data-g="Reference" hidden>
+  <h1>How time categories are set</h1>
+  <p class="lede">Every hour logged in AutoTask is sorted into one work area. The rules are checked from top to bottom, and the first rule that fits decides. Nobody picks the category by hand.</p>
+  <div class="panel"><h2>Two words used below</h2>
+    <p><b>Customer work</b> means the task belongs to a customer account. <b>DQ's own work</b> means the task has no customer account, or the account is marked DQ Internal.</p>
+    <p style="margin:0"><b>Project task</b> means the task is part of a project. A task that is not part of a project is a ticket.</p></div>
+  <div class="panel"><h2>The rules, in order</h2><div class="scroll"><table class="t" style="min-width:620px"><thead><tr><th>#</th><th>Category</th><th>The hour goes here when</th><th>Example</th></tr></thead><tbody>
+    <tr><td>1</td><td><span class="chip"><u style="background:var(--c-pto)"></u>PTO</span></td><td>It was logged with the Paid Time Off allocation code.</td><td>A day off logged as 8 hours of PTO</td></tr>
+    <tr><td>2</td><td><span class="chip"><u style="background:var(--c-sga)"></u>SG&amp;A</span></td><td>The task is in the "Project Scope Request" category.</td><td>Time scoping a possible new project</td></tr>
+    <tr><td>3</td><td><span class="chip"><u style="background:var(--c-adm)"></u>DQ Admin</span></td><td>It has no ticket category and no project category, and it is DQ's own work.</td><td>Internal time not tied to a ticket or a project</td></tr>
+    <tr><td>4</td><td><span class="chip"><u style="background:var(--c-ms)"></u>Managed Services</span></td><td>Either of these: customer work on a Recurring Service contract (tickets and project tasks), or a customer ticket on a Block Hours or Time &amp; Materials contract.</td><td>A support ticket for a customer on a monthly service agreement, or on a block of prepaid hours</td></tr>
+    <tr><td>5</td><td><span class="chip"><u style="background:var(--c-rev)"></u>Revenue Project</span></td><td>Customer work on a project task that is not on a Recurring Service contract, where the project has revenue attached (non-recurring revenue above zero).</td><td>A paid project for a customer</td></tr>
+    <tr><td>6</td><td><span class="chip"><u style="background:var(--c-comp)"></u>COMPed</span></td><td>Customer work on a project task that is not on a Recurring Service contract, where the project has no revenue.</td><td>Project work given to a customer at no charge</td></tr>
+    <tr><td>7</td><td><span class="chip"><u style="background:var(--c-int)"></u>DQ Internal Projects</span></td><td>DQ's own work on a project task.</td><td>An internal project, such as a tooling or process project</td></tr>
+    <tr><td>8</td><td><span class="chip"><u style="background:var(--c-se)"></u>DQ Sustained Engineering</span></td><td>DQ's own work that is a ticket, not a project.</td><td>An internal ticket for DQ's own systems</td></tr>
+  </tbody></table></div>
+  <p class="cap">Revenue Project and COMPed use the same test with opposite results: revenue above zero, or none. The contract used is the one on the time entry itself, or the task's contract if the entry has none. Time that fits none of these rules is not counted as work and shows up as bench.</p></div>
+  <div class="cols">
+    <div class="panel"><h2>Walk through three entries</h2>
+      <div class="eg"><b>2 hours on a customer ticket, contract type Recurring Service.</b><br>Not PTO, not Scope Request. It is not DQ's own work. Rule 4 fits: Managed Services.</div>
+      <div class="eg"><b>4 hours on a project task for a customer, project has revenue, not a Recurring Service contract.</b><br>Rule 5 fits: Revenue Project. With no revenue on the project it would be COMPed.</div>
+      <div class="eg"><b>3 hours on a project task for a customer on a Recurring Service contract.</b><br>Rule 4 comes first and fits: Managed Services, even though it is project work.</div>
+      <div class="eg"><b>1 hour of internal time with no ticket category and no project.</b><br>Rule 3 fits: DQ Admin.</div></div>
+    <div class="panel"><h2>Bench is not logged</h2><p>Nobody logs bench. It is calculated: available hours minus everything logged. <a href="#bench" style="color:var(--accent)">See how bench is calculated</a>.</p><p style="margin:0">Time that fits none of the rules is not shown on any chart. Because it is not counted as work, those hours end up as bench. Each person is placed in their active, default department.</p></div>
+    <div class="panel"><h2>Why it matters</h2><p>Project work on a Recurring Service contract is counted as Managed Services, not Revenue Project, because that rule is checked first.</p><p>A COMPed hour is real work, but no role has a COMPed target, so it never counts as target work.</p><p style="margin:0">Admin and Sustained Engineering are both DQ's own work. The difference is whether the task has a ticket category and a project, or neither.</p></div>
+  </div>
+  <div class="panel" style="margin-top:16px"><h2>What is left out before sorting</h2>
+    <p>Time dated today or later. Data refreshes each morning with yesterday's entries, so the dashboard counts through yesterday only.</p>
+    <p>People in these departments are not in the dashboard: Account Operations Manager, Administration, Client Advisory Services, Client Success Manager, Executives, Network and Voice, Sales &amp; Marketing and Support Center. A small list of named people is also left out.</p>
+    <p style="margin:0">The data starts on June 6, 2025. Scoring starts on September 1, 2026, so the Month, Quarter and Year pages do not count bench before that date.</p></div>
+</section>
+<section id="bench" data-t="How bench is calculated" data-g="Reference" hidden>
+  <h1>How bench time is calculated</h1>
+  <p class="lede">Bench is not entered by anyone. It is what is left of a person's available hours after PTO and all logged work are taken out.</p>
+  <div class="panel pic"><h2>The sum</h2>
+    <div class="bar" style="height:46px;margin:6px 0 10px"><i style="width:100%;background:var(--navy)">Weekdays so far x 8 hours = 40</i></div>
+    <div class="bar" style="height:46px;margin-bottom:10px"><i style="width:100%;background:var(--muted)">Minus PTO (0 here) = 40 available hours</i></div>
+    <div class="bar" style="height:46px"><i style="width:62.5%;background:var(--t-target)">25 target work</i><i style="width:12.5%;background:var(--t-non)">5 non-target</i><i style="width:12.5%;background:var(--t-admin)">5 admin</i><i class="bench" style="width:12.5%">5 bench</i></div>
+    <p class="cap">Bench = available hours minus the hours actually logged. Sample numbers for one person.</p></div>
+  <div class="cols">
+    <div class="panel"><h2>Step by step</h2><p>1. Count the weekdays so far, through yesterday, at 8 hours each. A finished week is 40.</p><p>2. Take off any PTO.</p><p>3. Take off every hour logged on work or admin.</p><p style="margin:0">4. What is left is bench. It never goes below zero.</p></div>
+    <div class="panel"><h2>Examples</h2><div class="eg">Sam has five weekdays but took Friday as PTO. 5 x 8 = 40, minus 8 PTO = 32. He logged 28 hours. Bench is 4.</div><div class="eg">Someone logs 45 hours in a 40-hour week. Bench is 0, not negative.</div><div class="eg">Someone is on PTO all week. Bench is 0, not 40.</div></div>
+    <div class="panel"><h2>Good to know</h2><p>Time logged to a task that fits no work area counts as bench, because it is not counted as work.</p><p>On the Month, Quarter and Year pages, time before September 1, 2026 is never counted as bench.</p><p style="margin:0">Today and future-dated entries are left out. Each weekday with nothing booked adds 8 hours of bench.</p></div>
+  </div>
+</section>
+<section id="start" data-t="Start here" data-g="Basics">
+  <h1>Read this guide in 60 seconds</h1>
+  <p class="lede">The dashboard shows how people spent their working hours and whether that time went to the work they are expected to do. There is an Individual view and a Team view, each with Week, Month, Quarter and Year pages.</p>
+  <div class="rules">
+    <div class="panel"><div class="n">1</div><h3>Numbers run through yesterday</h3><p>Data refreshes every morning. Today's hours, and anything entered for a future date, are not counted.</p></div>
+    <div class="panel"><div class="n">2</div><h3>A full week is 40 hours</h3><p>That is 8 hours for each weekday. PTO comes off first. What is left is called available hours.</p></div>
+    <div class="panel"><div class="n">3</div><h3>The goal is 80%</h3><p>About 8 of every 10 available hours should go to target work. The other 2 are the admin allowance.</p></div>
+  </div>
+  <div class="when">
+    <div class="panel"><h2>Week pages (WTD)</h2><div class="big">Sunday to Tuesday: last week</div><p>From Sunday to Tuesday the page shows last week's numbers, because the new week has little or no data yet. From Wednesday to Saturday it shows the current week.</p><div class="eg">Today is Tuesday, so you are reading last week, Monday to Friday, in full.</div></div>
+    <div class="panel"><h2>Month pages (MTD)</h2><div class="big">On or before the 5th: last month</div><p>Through the 5th of each month the page shows last month's numbers. From the 6th it switches to the current month.</p><div class="eg">Today is the 2nd, so MTD shows the whole of last month. On the 6th it starts the new month.</div></div>
+  </div>
+  <div class="panel story">
+    <h2>One example used throughout this guide</h2>
+    <h3>Chandler's week</h3>
+    <p>Chandler is in Field Operations and has no PTO this week, so he has <b>40 available hours</b>. His goal is 80% of that, <b>32 hours</b> of target work.</p>
+    <div class="bar" style="margin:10px 0 6px"><i style="width:75%;background:var(--t-target)">30 target work</i><i style="width:12.5%;background:var(--t-admin)">5 admin</i><i class="bench" style="width:12.5%">5 bench</i></div>
+    <p class="cap" style="margin:0">He logged 30 hours of target work (21 Managed Services and 9 Revenue Project), 5 of admin, and had 5 hours with nothing booked.</p>
+  </div>
+  <div class="panel"><h2>Who the numbers describe</h2><p>The cards show the average per person for whoever is selected. Pick one person and you see their week. Pick a department, or leave it on All, and you see the average person in that group. The Team pages show the group as a whole: shares, headcounts and totals.</p></div>
+</section>
+
+<section id="colours" data-t="What the colors mean" data-g="Basics" hidden>
+  <h1>What the colors mean</h1>
+  <p class="lede">Card numbers change color when they need attention. The rules differ a little by page. Grey always means there is no data yet.</p>
+  <div class="panel"><h2>Week pages</h2><p>Mostly two states: normal (navy) or a warning.</p>
+    <table class="t"><thead><tr><th>Card</th><th>Warning when</th></tr></thead><tbody>
+      <tr><td>Target Share</td><td><span class="chip"><u style="background:var(--bad)"></u>Red</span> below 80%</td></tr>
+      <tr><td>Target Attainment</td><td><span class="chip"><u style="background:var(--bad)"></u>Red</span> below 100% of goal</td></tr>
+      <tr><td>Admin</td><td><span class="chip"><u style="background:var(--warn)"></u>Amber</span> once admin reaches the 20% allowance</td></tr>
+      <tr><td>Bench</td><td><span class="chip"><u style="background:var(--bad)"></u>Red</span> if there is any bench at all</td></tr>
+      <tr><td>Mix Alignment</td><td><span class="chip"><u style="background:var(--warn)"></u>Amber</span> below 80%</td></tr>
+    </tbody></table></div>
+  <div class="panel"><h2>Month and Quarter pages</h2><p>Three states: green, amber, red.</p>
+    <table class="t"><thead><tr><th>Card</th><th>Green</th><th>Amber</th><th>Red</th></tr></thead><tbody>
+      <tr><td>Target Work</td><td>at or above goal</td><td>80% of goal or more</td><td>below 80% of goal</td></tr>
+      <tr><td>Target Share</td><td>80% or more</td><td>70% or more</td><td>below 70%</td></tr>
+      <tr><td>Admin</td><td>20% or less of available</td><td>none</td><td>above 20%</td></tr>
+      <tr><td>Bench</td><td>0 hours</td><td>1 to 8 hours</td><td>more than 8 hours</td></tr>
+      <tr><td>Mix Alignment</td><td>80% or more</td><td>70% or more</td><td>below 70%</td></tr>
+    </tbody></table></div>
+  <div class="panel"><h2>Year pages</h2><p>Two states again: normal, or a warning. Red for Target Share below 80%, Attainment below 100% and any Bench. Orange for Admin at or above 20% and Mix Alignment below 80%.</p></div>
+</section>
+
+<section id="calc" data-t="How each number is calculated" data-g="Basics" hidden>
+  <h1>How each number is calculated</h1>
+  <p class="lede">The labels under each chart, such as Week share and Week mix, explained one by one. Every example uses a 40-hour week with no PTO, for Chandler in Field Operations: 30 hours of target work (21 Managed Services and 9 Revenue Project), 5 admin and 5 bench.</p>
+  <div class="panel"><h2>The numbers behind the examples</h2>
+    <table class="t"><thead><tr><th>Chandler</th><th>Hours</th><th>Note</th></tr></thead><tbody>
+      <tr><td>Available</td><td>40</td><td>5 weekdays x 8, no PTO</td></tr>
+      <tr><td>Goal</td><td>32</td><td>80% of 40</td></tr>
+      <tr><td>Managed Services / Revenue Project</td><td>21 / 9</td><td>Planned: 60% / 40% of the goal, 19.2 / 12.8</td></tr>
+      <tr><td>Admin</td><td>5</td><td>Allowance is 20%, 8 hours</td></tr>
+      <tr><td>Bench</td><td>5</td><td>40 minus 35 logged</td></tr></tbody></table></div>
+
+  <div class="blk"><h3>Where the week went</h3><p class="sub">Labels: each work area, plus Bench.</p>
+    <div class="panel"><table class="t"><thead><tr><th>Label</th><th>How it is calculated</th><th>Chandler</th></tr></thead><tbody>
+      <tr><td>Each work area</td><td>Hours logged in that area, divided by the number of person-weeks in the bar.</td><td>This week: 21 Managed Services, 9 Revenue Project, 5 DQ Admin</td></tr>
+      <tr><td>Bench</td><td>Available hours minus all logged hours.</td><td>40 minus 35 = 5</td></tr>
+      <tr><td>4-wk average</td><td>Four weeks of hours, including this one, divided by the person-weeks.</td><td>Managed Services over four weeks: 21, 18, 20, 22. Total 81, divided by 4 = 20.3</td></tr></tbody></table>
+      <p class="cap">With a department selected, the total hours are divided by the number of people-weeks, so the bar shows the average person. Each bar adds up to the 40-hour week because bench fills the gap.</p></div></div>
+
+  <div class="blk"><h3>13-week trend</h3><p class="sub">Labels: Week share and Week mix. The dashed line is the 80% floor.</p>
+    <div class="panel"><table class="t"><thead><tr><th>Label</th><th>How it is calculated</th><th>Chandler</th></tr></thead><tbody>
+      <tr><td>Week share</td><td>Target work hours divided by available hours, for that one week.</td><td>30 divided by 40 = 75%</td></tr>
+      <tr><td>Week mix</td><td>How much of the target work went to the right area, for that one week. 100% minus the share of target hours that sat in the wrong area.</td><td>The plan wanted 12 of his 30 target hours on Revenue Project. He did 9. The 3 missing hours went to Managed Services. 3 of 30 is 10% out of place, so 100% minus 10% = 90%</td></tr></tbody></table>
+      <p class="cap">Each point is worked out separately for its own week, so one short week does not change the others. With several people selected, the hours are added up first and then divided.</p></div></div>
+
+  <div class="blk"><h3>Distribution to target, by resource</h3><p class="sub">Labels: Target work, Non-target work, Admin, Bench.</p>
+    <div class="panel"><table class="t"><thead><tr><th>Label</th><th>How it is calculated</th><th>Chandler</th></tr></thead><tbody>
+      <tr><td>Target work</td><td>Hours in work areas where the person's role has a plan. Admin is not included.</td><td>21 + 9 = 30</td></tr>
+      <tr><td>Non-target work</td><td>Hours in work areas where the role has no plan, such as COMPed.</td><td>0. Had he logged 3 hours on COMPed, target work would be 27 and non-target 3</td></tr>
+      <tr><td>Admin</td><td>Hours logged to DQ Admin.</td><td>5</td></tr>
+      <tr><td>Bench</td><td>Available hours minus all logged hours.</td><td>5</td></tr></tbody></table>
+      <p class="cap">The four bars add up to the 40 available hours. People are sorted by target work, lowest on the left.</p></div></div>
+
+  <div class="blk"><h3>Target mix: planned vs actual</h3><p class="sub">Labels: Planned to date, Actual in target, Actual out of target.</p>
+    <div class="panel"><table class="t"><thead><tr><th>Label</th><th>How it is calculated</th><th>Chandler</th></tr></thead><tbody>
+      <tr><td>Planned to date</td><td>Available hours through yesterday, x 80%, x the role's share for that area. Admin is planned at 20% of available.</td><td>Managed Services 19.2 (60% of 32). Revenue Project 12.8 (40% of 32). Admin 8</td></tr>
+      <tr><td>Actual in target</td><td>Hours worked in areas where the person has a plan, admin included.</td><td>Managed Services 21, Revenue Project 9, Admin 5</td></tr>
+      <tr><td>Actual out of target</td><td>Hours worked in areas where the person has no plan. Bench has no plan, so it shows here.</td><td>Bench 5</td></tr></tbody></table></div></div>
+
+  <div class="blk"><h3>Cards: the small line under each number</h3><p class="sub">Each one repeats the number as a share of available hours.</p>
+    <div class="panel"><table class="t"><thead><tr><th>Card</th><th>Line under it</th><th>Chandler</th></tr></thead><tbody>
+      <tr><td>Target Share</td><td>"of the 40-hr week": the available hours it is divided by</td><td>30 of 40</td></tr>
+      <tr><td>Admin Hours</td><td>Admin hours divided by available hours</td><td>5 divided by 40 = 12.5% of week</td></tr>
+      <tr><td>Bench Hours</td><td>Bench hours divided by available hours</td><td>5 divided by 40 = 12.5% of week</td></tr></tbody></table></div></div>
+
+  <div class="blk"><h3>Team pages</h3><p class="sub">Example team of two: Chandler (40 available) and Sam, who took Friday as PTO and has 32 available. Sam logged 14 Managed Services, 6 Revenue Project, 4 COMPed and 4 admin, with 4 on bench.</p>
+    <div class="panel"><table class="t"><thead><tr><th>Label</th><th>How it is calculated</th><th>Chandler + Sam</th></tr></thead><tbody>
+      <tr><td>Cumulative team hours: each work area</td><td>Hours logged in that area, added up across everyone selected.</td><td>Managed Services 21 + 14 = 35. Revenue Project 9 + 6 = 15. COMPed 4. Admin 9. Bench 9. PTO 8</td></tr>
+      <tr><td>Target work %</td><td>Target work hours divided by total hours, with PTO left out.</td><td>50 of 72 hours = 69%</td></tr>
+      <tr><td>Non-target work %</td><td>Hours in areas with no plan, divided by total hours.</td><td>4 of 72 = 6%</td></tr>
+      <tr><td>Admin %</td><td>Admin hours divided by total hours.</td><td>9 of 72 = 12.5%</td></tr>
+      <tr><td>Bench %</td><td>Bench hours divided by total hours.</td><td>9 of 72 = 12.5%</td></tr></tbody></table>
+      <p class="cap">The four percentages add up to 100%. 72 is 80 total hours minus Sam's 8 PTO hours. The trend draws one point per week with the same sum.</p></div></div>
+
+  <div class="blk"><h3>Year to date page</h3><p class="sub">Example: Chandler's first ten weeks, 400 available hours, same pattern each week.</p>
+    <div class="panel"><table class="t"><thead><tr><th>Label</th><th>How it is calculated</th><th>Chandler</th></tr></thead><tbody>
+      <tr><td>Total available hrs</td><td>8 hours per weekday so far, through yesterday, from September 1. PTO is included on this page.</td><td>10 weeks x 40 = 400</td></tr>
+      <tr><td>Each category card</td><td>Hours in that area over the whole period.</td><td>Managed Services 210, Revenue Project 90, Admin 50, Bench 50</td></tr>
+      <tr><td>Target share</td><td>Target work divided by available hours.</td><td>300 divided by 400 = 75%</td></tr>
+      <tr><td>Hours distribution trend lines</td><td>For each month: that kind of hours divided by total hours, with PTO left out.</td><td>Target work 300 of 400 = 75%. Admin 12.5%. Bench 12.5%</td></tr>
+      <tr><td>Attainment (Hours by person)</td><td>Target work divided by the goal, which is 80% of available.</td><td>300 divided by 320 = 94%</td></tr></tbody></table></div></div>
+</section>
+<section id="i-cards" data-t="Individual: the cards" data-g="Individual pages" hidden>
+  <h1>Individual pages: the cards</h1>
+  <p class="lede">Seven cards run across the top. The small line under each number gives context.</p>
+  <div class="panel">
+    <div class="kpi"><div class="card"><div class="nm">Available Hours</div><div class="v n">40</div><div class="s">of the 40-hr week</div></div>
+      <div><h3>Available Hours</h3><p>The hours the person could have worked so far.</p><dl><dt>How</dt><dd>8 hours for each weekday that has passed, minus PTO.</dd><dt>Example</dt><dd>Chandler worked all five days: 5 x 8 = 40. With Friday as PTO it would read 32.</dd></dl></div></div>
+    <div class="kpi"><div class="card"><div class="nm">Target Work Hours</div><div class="v g">30</div><div class="s">&#9650; 1.4 vs prior</div></div>
+      <div><h3>Target Work Hours</h3><p>Hours spent on the work the person's role has a target for. Admin, bench and PTO do not count. On the week page the line under the number shows the change from the prior week.</p><dl><dt>Example</dt><dd>Chandler logged 21 hours of Managed Services and 9 of Revenue Project, both in his targets: 30 hours.</dd></dl></div></div>
+    <div class="kpi"><div class="card"><div class="nm">Target Share of Week</div><div class="v b">75%</div><div class="s">of the 40-hr week</div></div>
+      <div><h3>Target Share</h3><p>How much of the available time went to target work.</p><dl><dt>How</dt><dd>Target work hours divided by available hours.</dd><dt>Example</dt><dd>30 divided by 40 is 75%. The goal is 80%, so Chandler is a little short and the card shows red.</dd></dl></div></div>
+    <div class="kpi"><div class="card"><div class="nm">Admin Hours</div><div class="v n">5</div><div class="s">12.5% of week</div></div>
+      <div><h3>Admin Hours</h3><p>Hours on internal admin work. Up to 20% of the week is the allowance.</p><dl><dt>Example</dt><dd>20% of 40 hours is 8. Chandler used 5, so he is inside the allowance.</dd></dl></div></div>
+    <div class="kpi"><div class="card"><div class="nm">Bench Hours</div><div class="v b">5</div><div class="s">12.5% of week</div></div>
+      <div><h3>Bench Hours</h3><p>Available hours with no work booked against them.</p><dl><dt>Example</dt><dd>40 available, minus 30 target work and 5 admin, leaves 5. <a href="#bench" style="color:var(--accent)">See how bench is calculated</a>.</dd></dl></div></div>
+    <div class="kpi"><div class="card"><div class="nm">Overage</div><div class="v n">8%</div><div class="s">met and over 40 only</div></div>
+      <div><h3>Overage</h3><p>Shows how much work went beyond what was expected. The small line under the number says when it applies.</p></div></div>
+    <div class="kpi"><div class="card"><div class="nm">Mix Alignment</div><div class="v w">90%</div><div class="s">planned hrs, 80%</div></div>
+      <div><h3>Mix Alignment</h3><p>Whether the target work went to the right areas. 100% means every hour sat where the plan wanted it. Lower means some hours went to a different area than planned.</p><dl>
+        <dt>Example</dt><dd>Chandler logged 30 hours of target work. His role's plan wanted 12 of them on Revenue Project and 18 on Managed Services. He did 9 and 21. So 3 hours went to Managed Services that the plan wanted on Revenue Project. 3 of 30 is 10% out of place, so the mix is 90%.</dd>
+        <dt>Versus share</dt><dd>Target Share says how much time went to target work. Mix Alignment says whether it went to the right kinds of target work, in the right proportions.</dd></dl></div></div>
+  </div>
+</section>
+
+<section id="i-charts" data-t="Individual: the charts" data-g="Individual pages" hidden>
+  <h1>Individual pages: the charts</h1>
+  <p class="lede">Four charts and one table sit below the cards. All of them respond to the Department and Resource slicers.</p>
+
+  <div class="blk"><h3>Where the week went</h3><p class="sub">Average hours per person against the 40-hour week. Answers: is the mix of work changing?</p>
+    <div class="panel pic"><div id="weekbars"></div><div class="legend" id="weeklegend"></div><p class="cap">Sample data. Each bar adds up to the 40-hour week.</p></div>
+    <div class="cols four"><div class="panel"><h2>What it shows</h2><p>Three bars: this week, the prior week and the 4-week average. Each color is a work area, and its width is the hours.</p></div>
+    <div class="panel"><h2>How to read it</h2><p>Compare the bars. If this week looks like the average, nothing changed. A red outlined block is bench time.</p><div class="eg">This week: 16 hours of Managed Services, 7 of admin, 4 on bench. The prior week had 6 on bench, so bench came down.</div></div>
+    <div class="panel"><h2>Look out for</h2><p>Bench growing week over week. Admin above 8 hours. A work area that disappears from the bar.</p></div><div class="panel calc"><h2>How it is calculated</h2><p>Hours logged in each area, divided by the people-weeks in the bar. Bench is available hours minus everything logged. <div class="eg">Chandler: 21 Managed Services + 9 Revenue Project + 5 admin + 5 bench = 40.</div></p></div></div>
+    <p class="note" style="margin-top:10px">On the Month page the three bars are this month, last month and the 3-month average, and the chart is named for the month. The Quarter page has the same chart for the quarter. On the Year page it shows one bar for the year so far.</p></div>
+
+  <div class="blk"><h3>13-week trend</h3><p class="sub">Target share and mix alignment against the 80% floor. Answers: are we getting better or worse?</p>
+    <div class="panel pic"><div class="scroll"><svg id="trendsvg" viewBox="0 0 640 270" width="100%" style="min-width:520px" role="img" aria-label="Sample line chart of target share and mix alignment over 13 weeks"></svg></div>
+    <div class="legend"><span><u style="background:var(--c-sga)"></u>Week share</span><span><u style="background:var(--c-ms)"></u>Week mix</span><span><u style="background:var(--muted);height:2px;margin-top:5px"></u>80% goal</span></div><p class="cap">Sample data.</p></div>
+    <div class="cols four"><div class="panel"><h2>What it shows</h2><p>Two lines. Green is Target Share. Blue is Mix Alignment. The dashed line is the 80% goal.</p></div>
+    <div class="panel"><h2>How to read it</h2><p>Lines climbing toward the dashed line are good.</p><div class="eg">Chandler's share was 75% and his mix 70% in the latest week. Both are below the line but both have climbed over the quarter.</div></div>
+    <div class="panel"><h2>Look out for</h2><p>A sudden dip. Check Available Hours for that week first. A short week from PTO can move the percentages.</p></div><div class="panel calc"><h2>How it is calculated</h2><p><b>Green: Week share</b><br>Out of the hours Chandler could work, how many went to the work he is expected to do. <div class="eg">40 hours available, 30 spent on target work: 30 out of 40 = 75%.<br><b>In plain words:</b> 3 out of every 4 hours went to real target work. The goal is 4 out of 5 (80%).</div><br><b>Blue: Week mix</b><br>Of his target work, was the time spent in the right place? <div class="eg">The plan wanted 12 of his 30 hours on Revenue Project. He did 9, and the other 3 went to Managed Services.<br><b>In plain words:</b> 27 of his 30 hours were in the right place, so 90%. 100% would mean every hour was where the plan wanted it.</div></p></div></div>
+    <p class="note" style="margin-top:10px">The Month page shows the last 6 months and the Quarter page the last 4 quarters.</p></div>
+
+  <div class="blk"><h3>Distribution to target, by resource</h3><p class="sub">Every person's hours split four ways. The people furthest from target are on the left, so coaching starts there.</p>
+    <div class="panel pic"><div class="scroll"><div class="dist" id="dist"><div class="goal" style="bottom:80%"><span>goal</span></div></div><div class="names" id="distnames"></div></div>
+    <div class="legend"><span><u style="background:var(--t-target)"></u>Target work</span><span><u style="background:var(--t-non)"></u>Non-target work</span><span><u style="background:var(--t-admin)"></u>Admin</span><span><u class="bench"></u>Bench</span></div><p class="cap">Sample data.</p></div>
+    <div class="cols four"><div class="panel"><h2>What it shows</h2><p>One bar per person. Dark is target work, orange is work outside their targets, gray is admin, red outline is bench.</p></div>
+    <div class="panel"><h2>How to read it</h2><p>Look at where the dark part reaches the dashed goal line.</p><div class="eg">Ana, on the far left, has 14 hours of target work and a large bench block. She is the first conversation. Nia, far right, has 37.</div></div>
+    <div class="panel"><h2>Look out for</h2><p>Big orange blocks: busy, but not on target work. Big red blocks: free time that went unused. People whose role has no targets set show no target work and appear on the far left.</p></div><div class="panel calc"><h2>How it is calculated</h2><p>Target work is hours in areas the role has a plan for, admin not included. Non-target is hours in areas with no plan. Admin is DQ Admin hours. Bench is available minus logged. <div class="eg">Chandler: 30 target, 0 non-target, 5 admin, 5 bench = 40.</div></p></div></div></div>
+
+  <div class="blk"><h3>Target mix: planned vs actual</h3><p class="sub">For each work area, the hours that were planned and the hours worked. Answers: where did plan and reality differ?</p>
+    <div class="panel pic"><div class="scroll"><div class="mix" id="mixchart"></div><div class="lab" id="mixlab"></div></div>
+    <div class="legend"><span><u style="background:#B8C2CB"></u>Planned to date</span><span><u style="background:var(--t-target)"></u>Actual, in target</span><span><u style="background:var(--bad)"></u>Actual, out of target</span></div><p class="cap">Sample data.</p></div>
+    <div class="cols four"><div class="panel"><h2>What it shows</h2><p>Three columns per work area: the plan up to yesterday, the hours worked in areas the person has a plan for, and the hours worked in areas they have no plan for.</p></div>
+    <div class="panel"><h2>How to read it</h2><p>Dark blue close to gray means the plan was met. Red means time was spent where the person's role has no plan.</p><div class="eg">Managed Services: planned 14 hours on average, 13 were worked by people who have a Managed Services plan, and 3 by people whose role has none. Bench has no plan, so its 4 hours show as red.</div></div>
+    <div class="panel"><h2>Look out for</h2><p>The dark blue and red together can add up to more than the Target Work card, because the card counts only the dark blue work areas and leaves out admin. COMPed has no plan for any role, so it is always red.</p></div><div class="panel calc"><h2>How it is calculated</h2><p>Planned is available hours x 80% x the role's share, with admin at 20% of available. Actual in target is hours in planned areas. Actual out of target is hours in areas with no plan, bench included. <div class="eg">Chandler planned: 19.2 Managed Services, 12.8 Revenue Project, 8 admin. Actual: 21, 9 and 5, plus 5 bench out of target.</div></p></div></div></div>
+
+  <div class="blk"><h3>Export: resource by category</h3><p class="sub">The numbers behind the charts, one row per person and work area.</p>
+    <div class="panel pic"><div class="scroll"><table class="t"><thead><tr><th>Resource</th><th>Role</th><th>Work area</th><th>Target hrs</th><th>Actual hrs</th><th>Target %</th><th>Actual %</th></tr></thead><tbody>
+      <tr><td>Chandler</td><td>Field Operations</td><td>Managed Services</td><td>19.2</td><td>21</td><td>60%</td><td>70%</td></tr>
+      <tr><td>Chandler</td><td>Field Operations</td><td>Revenue Project</td><td>12.8</td><td>9</td><td>40%</td><td>30%</td></tr></tbody></table></div><p class="cap">Sample data. Open the three dots menu on the table and choose Export data, if your access allows it.</p></div><div class="panel calc" style="margin-top:0"><h2>How it is calculated</h2><p>Target hrs is the planned hours for that area. Actual hrs is hours logged. The two percent columns are each one's share of the person's total. <div class="eg">Chandler, Managed Services: 19.2 of 32 planned = 60%. 21 of 30 actual = 70%.</div></p></div></div>
+</section>
+
+<section id="i-periods" data-t="Individual: month and quarter" data-g="Individual pages" hidden>
+  <h1>Month and Quarter pages</h1>
+  <p class="lede">These pages work like the Week page with a longer window. The cards read "of the month" or "of the quarter" instead of "of the week", and available hours count every weekday in the window through yesterday. The cards and charts are explained in the two chapters before this one.</p>
+  <div class="cols">
+    <div class="panel"><h2>Month</h2><p>Last month through the 5th, then the current month. The trend shows 6 months. The comparison chart shows this month, last month and the 3-month average.</p></div>
+    <div class="panel"><h2>Quarter</h2><p>The current quarter so far. The trend shows 4 quarters. The comparison chart is named "Where the quarter went".</p></div>
+    <div class="panel"><h2>Same visuals as the Week page</h2><p>Seven cards, the comparison chart, the trend, Distribution to target, Target mix and the export table. The Year page is different, so it has its own chapter.</p></div>
+  </div>
+</section>
+
+<section id="i-ytd" data-t="Individual: year to date" data-g="Individual pages" hidden>
+  <h1>Year to date page</h1>
+  <p class="lede">Everything since tracking started on September 1, 2026, through yesterday. This page has more visuals than the others, in the order below. A date filter and a Year, Quarter and Month slicer let you narrow the window.</p>
+
+  <div class="blk"><h3>Where every available hour went</h3><p class="sub">A total card followed by nine cards, one per work area plus bench and PTO. They add up to the total.</p>
+    <div class="panel pic"><div class="ycards" id="ycards"></div><p class="cap">Sample data for one person. Total available hours include PTO.</p></div>
+    <div class="cols four"><div class="panel"><h2>What it shows</h2><p>The first card is the total available hours for the year so far. Each card after it is the share of those hours, in hours, that went to one area.</p></div>
+    <div class="panel"><h2>How to read it</h2><p>Add the nine cards and you get the total.</p><div class="eg">357 available hours: 133 Managed Services, 56 Admin, 53 Sustained Engineering, 51 Bench, 26 Revenue Project, 22 PTO, 6 DQ Internal Projects, 5 COMPed and 5 SG&amp;A.</div></div>
+    <div class="panel"><h2>Look out for</h2><p>A large Bench card, or a large Admin card.</p></div><div class="panel calc"><h2>How it is calculated</h2><p>The total is 8 hours x weekdays since September 1, with PTO included. Each card is the hours logged in that area. <div class="eg">Chandler after 10 weeks: total 400, Managed Services 210, Revenue Project 90, Admin 50, Bench 50.</div></p></div></div></div>
+
+  <div class="blk"><h3>The second row of cards</h3><p class="sub">Four headline numbers for the whole period.</p>
+    <div class="panel pic"><div class="ycards4">
+      <div class="card"><div class="nm">TARGET WORK HRS</div><div class="v b">182</div></div>
+      <div class="card"><div class="nm">TARGET SHARE</div><div class="v b">58%</div></div>
+      <div class="card"><div class="nm">BENCH HRS</div><div class="v b">51</div></div>
+      <div class="card"><div class="nm">MIX ALIGNMENT</div><div class="v w">64%</div></div></div><p class="cap">Sample data.</p></div>
+    <div class="cols four"><div class="panel"><h2>What it shows</h2><p>The same four measures as on the other pages, over the whole year so far.</p></div>
+    <div class="panel"><h2>How to read it</h2><p>Target Share is target work divided by available hours. Bench Hours is the hours with no work booked. See <a href="#bench" style="color:var(--accent)">how bench is calculated</a>.</p></div>
+    <div class="panel"><h2>Look out for</h2><p>Red or orange numbers, as in <a href="#colours" style="color:var(--accent)">What the colors mean</a>.</p></div><div class="panel calc"><h2>How it is calculated</h2><p>Target work is hours in planned areas, admin excluded. Target share is target work divided by available. Bench is available minus logged. Mix alignment is 100% minus the share of target hours that sat in the wrong area. <div class="eg">Chandler: 300 / 400 = 75% share.</div></p></div></div></div>
+
+  <div class="blk"><h3>Where the year went</h3><p class="sub">Average hours per person. The bar adds up to total available hours.</p>
+    <div class="panel pic"><div id="ybar"></div><div class="legend" id="ybarlegend"></div><p class="cap">Sample data. One bar for the whole period.</p></div>
+    <div class="cols four"><div class="panel"><h2>What it shows</h2><p>A single bar for the whole year, split by work area. It is the cards above, drawn as one picture.</p></div>
+    <div class="panel"><h2>How to read it</h2><p>The wide blue block is Managed Services. The red outlined block at the end is bench.</p></div>
+    <div class="panel"><h2>Look out for</h2><p>Bench taking a large share of the bar.</p></div><div class="panel calc"><h2>How it is calculated</h2><p>Hours in each area for the whole period, as an average per person. It is the cards above without PTO. <div class="eg">Chandler: Managed Services 210, Revenue Project 90, Admin 50, Bench 50 = 400.</div></p></div></div></div>
+
+  <div class="blk"><h3>Distribution to target</h3><p class="sub">People by percentage of their target hours.</p>
+    <div class="panel pic"><div class="bands" id="bands"></div><p class="cap">Sample data. Each column counts people.</p></div>
+    <div class="cols four"><div class="panel"><h2>What it shows</h2><p>On the Year page this chart counts people instead of showing one bar each. Each column is a range of target attainment: under 40%, 40 to 60%, 60 to 80%, 80 to 100%, and 100% or more.</p></div>
+    <div class="panel"><h2>How to read it</h2><p>You want people moving to the right.</p><div class="eg">22 people are under 40% of their target hours. 14 are at 100% or more.</div></div>
+    <div class="panel"><h2>Look out for</h2><p>A tall column on the far left. Those people are well below target for the year so far.</p></div><div class="panel calc"><h2>How it is calculated</h2><p>Each person's target work is divided by their goal, which is 80% of their available hours. People are then counted into a band. <div class="eg">Chandler: 300 / 320 = 94%, so he is counted in 80 to 100%.</div></p></div></div></div>
+
+  <div class="blk"><h3>Hours distribution trend</h3><p class="sub">Share of available hours by month. PTO excluded.</p>
+    <div class="panel pic"><div class="scroll"><svg id="ytrend" viewBox="0 0 640 270" width="100%" style="min-width:520px" role="img" aria-label="Sample line chart of the hours distribution by month"></svg></div>
+    <div class="legend"><span><u style="background:var(--t-target)"></u>Target work %</span><span><u style="background:var(--t-non)"></u>Non-target work %</span><span><u style="background:var(--t-admin)"></u>Admin %</span><span><u style="background:var(--bad)"></u>Bench %</span></div><p class="cap">Sample data. The four lines add up to 100% in each month. The latest month is still in progress.</p></div>
+    <div class="cols four"><div class="panel"><h2>What it shows</h2><p>One point per month, four lines.</p></div>
+    <div class="panel"><h2>How to read it</h2><p>You want target work high and steady, and bench low.</p></div>
+    <div class="panel"><h2>Look out for</h2><p>A month still in progress has fewer days, so its first points can move a lot.</p></div><div class="panel calc"><h2>How it is calculated</h2><p>For each month, that kind of hours divided by total hours, with PTO left out. <div class="eg">Chandler: target work 300 of 400 = 75%, admin 12.5%, bench 12.5%.</div></p></div></div></div>
+
+  <div class="blk"><h3>Target mix: planned vs actual</h3><p class="sub">Planned and actual hours for each work area.</p>
+    <div class="panel pic"><div class="scroll"><div class="mix" id="mixchart2"></div><div class="lab" id="mixlab2"></div></div>
+    <div class="legend"><span><u style="background:#B8C2CB"></u>Planned by category</span><span><u style="background:var(--t-target)"></u>Actual in target</span><span><u style="background:var(--bad)"></u>Actual out of target</span></div><p class="cap">Sample data. Same chart as on the other pages, for the whole year.</p></div><div class="panel calc"><h2>How it is calculated</h2><p>Planned is available hours x 80% x the role's share, with admin at 20% of available. Actual in target is hours in planned areas. Actual out of target is hours in areas with no plan, bench included. <div class="eg">Chandler's week: planned 19.2 Managed Services, 12.8 Revenue Project, 8 admin. Actual 21, 9 and 5, plus 5 bench out of target.</div></p></div></div>
+
+  <div class="blk"><h3>Hours by person</h3><p class="sub">A table with one row per person, highest target work first.</p>
+    <div class="panel pic"><div class="scroll"><table class="t"><thead><tr><th>Resource</th><th>Total available</th><th>Target work</th><th>Non-target work</th><th>Admin</th><th>Bench</th><th>Attainment</th></tr></thead><tbody>
+      <tr><td>Nia</td><td>357</td><td>301</td><td>12</td><td>31</td><td>13</td><td>105%</td></tr>
+      <tr><td>Chandler</td><td>357</td><td>252</td><td>20</td><td>45</td><td>40</td><td>88%</td></tr>
+      <tr><td>Ana</td><td>357</td><td>118</td><td>82</td><td>47</td><td>110</td><td>41%</td></tr></tbody></table></div>
+    <p class="cap">Sample data. Only people in the range chosen on the page are listed.</p></div><div class="panel calc"><h2>How it is calculated</h2><p>Attainment is target work divided by the goal, which is 80% of available hours. The other columns are hours of each kind. <div class="eg">Chandler: 300 / 320 = 94% attainment.</div></p></div></div>
+</section>
+
+<section id="t-cards" data-t="Team: the cards" data-g="Team pages" hidden>
+  <h1>Team pages: the cards</h1>
+  <p class="lede">The Team pages look at a whole department. There is no Resource slicer, only Department. Six cards run across the top, with a caption line under the work area chart.</p>
+  <div class="panel">
+    <div class="kpi"><div class="card"><div class="nm">TEAM TARGET SHARE</div><div class="v w">74%</div><div class="s">of available hrs</div></div>
+      <div><h3>Team Target Share</h3><p>The share of the team's available time that went to target work.</p><dl><dt>Example</dt><dd>The team had 400 available hours and 296 went to target work: 74%.</dd></dl></div></div>
+    <div class="kpi"><div class="card"><div class="nm">TARGET ATTAINMENT</div><div class="v b">93%</div><div class="s">of goal</div></div>
+      <div><h3>Target Attainment</h3><p>Target work compared with the goal, which is 80% of available hours.</p><dl><dt>Example</dt><dd>The goal is 80% of 400 = 320 hours. The team did 296, so 296 divided by 320 is 93%.</dd><dt>Versus share</dt><dd>Share is measured against all available time. Attainment is measured against the goal. 74% share and 93% attainment describe the same week.</dd></dl></div></div>
+    <div class="kpi"><div class="card"><div class="nm">BENCH</div><div class="v b">4.2</div><div class="s">hrs per person</div></div>
+      <div><h3>Bench</h3><p>The average bench hours per person. See <a href="#bench" style="color:var(--accent)">how bench is calculated</a>.</p></div></div>
+    <div class="kpi"><div class="card"><div class="nm">ADMIN SHARE</div><div class="v n">16%</div><div class="s">of available hrs</div></div>
+      <div><h3>Admin Share</h3><p>Admin hours as a share of available hours. The allowance is 20%.</p></div></div>
+    <div class="kpi"><div class="card"><div class="nm">MIX ALIGNMENT</div><div class="v w">82%</div><div class="s">planned mix</div></div>
+      <div><h3>Mix Alignment</h3><p>Same measure as on the Individual pages: how closely the actual split of target work matches the planned split. 100% is a perfect match.</p></div></div>
+    <div class="kpi"><div class="card"><div class="nm">ON OR ABOVE TARGET</div><div class="v n">7 of 12</div><div class="s">people</div></div>
+      <div><h3>On or Above Target</h3><p>How many people reached their goal, out of everyone in the selected team.</p><dl><dt>Example</dt><dd>7 of 12 means five people are still below goal.</dd></dl></div></div>
+  </div>
+</section>
+
+<section id="t-charts" data-t="Team: charts and roster" data-g="Team pages" hidden>
+  <h1>Team pages: charts and roster</h1>
+  <p class="lede">Three charts and a roster table sit below the cards.</p>
+
+  <div class="blk"><h3>Cumulative team hours by work area</h3><p class="sub">Total hours the team logged in each work area. Answers: where does the team's time go?</p>
+    <div class="panel pic"><div id="teambars"></div><p class="cap">Sample data. Hours added up across the team.</p></div>
+    <div class="cols four"><div class="panel"><h2>What it shows</h2><p>One bar per work area. The number is total hours across everyone selected, so it grows with team size.</p></div>
+    <div class="panel"><h2>How to read it</h2><p>The longest bars are where the team spends its time. Bench and PTO appear as their own bars.</p></div>
+    <div class="panel"><h2>Look out for</h2><p>A long Bench bar, or a work area that should be busy but is short.</p></div><div class="panel calc"><h2>How it is calculated</h2><p>Hours logged in each area, added up across everyone selected. <div class="eg">Chandler + Sam, Managed Services: 21 + 14 = 35 hours.</div></p></div></div></div>
+
+  <div class="blk"><h3>Hours distribution trend</h3><p class="sub">The share of the team's hours that went to each of four kinds of work, period by period.</p>
+    <div class="panel pic"><div class="scroll"><svg id="teamtrend" viewBox="0 0 640 270" width="100%" style="min-width:520px" role="img" aria-label="Sample line chart of the hours distribution"></svg></div>
+    <div class="legend"><span><u style="background:var(--t-target)"></u>Target work</span><span><u style="background:var(--t-non)"></u>Non-target work</span><span><u style="background:var(--t-admin)"></u>Admin</span><span><u style="background:var(--bad)"></u>Bench</span></div><p class="cap">Sample data. PTO is left out, so the four lines add up to 100%.</p></div>
+    <div class="cols four"><div class="panel"><h2>What it shows</h2><p>Four lines, each a percent of total hours with PTO left out.</p></div>
+    <div class="panel"><h2>How to read it</h2><p>You want the target work line high and steady, and bench low.</p></div>
+    <div class="panel"><h2>Look out for</h2><p>Bench rising while target work falls. It usually means work is not being booked, or there is spare capacity.</p></div><div class="panel calc"><h2>How it is calculated</h2><p>Each kind of hours divided by total hours, with PTO left out. <div class="eg">Chandler 40 hours + Sam 32 hours (a PTO day off). Target work 50 of 72 = 69%.</div></p></div></div></div>
+
+  <div class="blk"><h3>Hours by department</h3><p class="sub">The team's hours split four ways.</p>
+    <div class="panel pic"><div class="scroll"><div class="dist" id="dist2" style="height:200px"><div class="goal" style="bottom:80%"><span>goal</span></div></div><div class="names" id="dist2names"></div></div><p class="cap">Sample data, same four colors as the Individual distribution chart.</p></div>
+    <div class="cols four"><div class="panel"><h2>What it shows</h2><p>Each bar is hours split into target work, non-target work, admin and bench.</p></div>
+    <div class="panel"><h2>How to read it</h2><p>Compare the dark share of each bar against the dashed goal line.</p></div>
+    <div class="panel"><h2>Look out for</h2><p>Bars with large red outlined blocks have unused capacity.</p></div><div class="panel calc"><h2>How it is calculated</h2><p>The same four kinds as the Individual distribution chart: target work, non-target work, admin and bench. <div class="eg">Chandler: 30, 0, 5 and 5, adding up to 40.</div></p></div></div></div>
+
+  <div class="blk"><h3>Team roster</h3><p class="sub">A table of everyone in the team, so you can see who needs attention.</p>
+    <div class="panel pic"><div class="scroll"><table class="t"><thead><tr><th>Resource</th><th>Target work</th><th>Bench</th><th>Attainment</th><th>Mix alignment</th><th>Status</th></tr></thead><tbody>
+      <tr><td>Ana</td><td>14</td><td>12</td><td>44%</td><td>71%</td><td>Missed target</td></tr>
+      <tr><td>Chandler</td><td>30</td><td>5</td><td>94%</td><td>90%</td><td>Missed target</td></tr>
+      <tr><td>Nia</td><td>37</td><td>1</td><td>116%</td><td>88%</td><td>Exceeds target</td></tr></tbody></table></div>
+    <p class="cap">Sample data. Status reads "Exceeds target" at 105% or more, "On target" at 100% or more, otherwise "Missed target".</p></div>
+    <div class="cols four"><div class="panel"><h2>Sorting</h2><p>On the Week page the table puts the people with the most bench first. On the Month, Quarter and Year pages it puts the lowest attainment first.</p></div>
+    <div class="panel"><h2>Columns</h2><p>The Month and Quarter tables also show Mix Alignment and a Status.</p></div>
+    <div class="panel"><h2>Use it for</h2><p>Coaching conversations. The people at the top of the list are the ones to talk to first.</p></div><div class="panel calc"><h2>How it is calculated</h2><p>Attainment is target work divided by the goal. Status reads Exceeds at 105% or more, On target at 100% or more, otherwise Missed. <div class="eg">Chandler: 30 / 32 = 94%, so Missed target.</div></p></div></div></div>
+</section>
+
+
+
+
+
+<section id="gloss" data-t="Glossary" data-g="Glossary" hidden>
+  <h1>Glossary</h1>
+  <p class="lede">Every term on the pages, in plain words.</p>
+  <div class="panel"><dl class="gl">
+    <dt>Available hours</dt><dd>8 hours per weekday that has passed, minus PTO.</dd>
+    <dt>Goal</dt><dd>80% of available hours. For a full week, 32 hours.</dd>
+    <dt>Target work</dt><dd>Time on work the person's role has a target for. Admin, bench, PTO and COMPed are not included.</dd>
+    <dt>Non-target work</dt><dd>Real work that does not count toward the person's target.</dd>
+    <dt>Admin</dt><dd>Internal administrative time. Up to 20% of available hours is the allowance.</dd>
+    <dt>Bench</dt><dd>Available hours with no work booked.</dd>
+    <dt>PTO</dt><dd>Paid time off. It is taken out of available hours.</dd>
+    <dt>Target share</dt><dd>Target work divided by available hours. <div class="eg">Week example: Chandler has 40 available hours and logged 30 hours of target work. 30 divided by 40 = 75%.</div></dd>
+    <dt>Target attainment</dt><dd>Target work divided by the goal. 100% means the goal was reached. <div class="eg">Week example: the goal is 80% of 40 hours = 32 hours. Chandler logged 30 hours of target work. 30 divided by 32 = 94%.</div></dd>
+    <dt>Mix alignment</dt><dd>How closely the actual split of target work matches the planned split for the role. 100% is a perfect match.</dd>
+    <dt>Through yesterday</dt><dd>Today's hours and future-dated entries are left out, because data refreshes each morning.</dd>
+    <dt>Time category</dt><dd>The work area an hour is sorted into, such as Managed Services or Revenue Project. The rules are in <a href="#cats" style="color:var(--accent)">How time categories are set</a>.</dd>
+    <dt>Time that fits no rule</dt><dd>Not shown on any chart. It is not counted as work, so it ends up as bench.</dd>
+    <dt>Roster status</dt><dd>Exceeds target at 105% attainment or more, on target at 100% or more, otherwise missed target.</dd>
+    <dt>Why it may differ from AutoTask</dt><dd>This dashboard takes PTO out of available hours and stops at yesterday. AutoTask totals may include both.</dd>
+  </dl></div>
+</section>
+
+<div class="pager"><button id="prev">Previous</button><button id="next">Next</button></div>
+</main>
+</div>
+
+<script>
+(function(){
+  var secs=[].slice.call(document.querySelectorAll('main > section'));
+  var nav=document.getElementById('nav'),lastG='';
+  secs.forEach(function(s){
+    var g=s.dataset.g;
+    if(g!==lastG){var h=document.createElement('div');h.className='grp';h.textContent=g;nav.appendChild(h);lastG=g}
+    var a=document.createElement('a');a.href='#'+s.id;a.textContent=s.dataset.t;a.dataset.id=s.id;nav.appendChild(a);
+  });
+  function idx(){var h=location.hash.replace('#','');for(var i=0;i<secs.length;i++)if(secs[i].id===h)return i;return h?0:secs.findIndex(function(x){return x.id==='start'})}
+  function show(){
+    var i=idx();
+    secs.forEach(function(s,j){s.hidden=j!==i});
+    [].forEach.call(nav.querySelectorAll('a'),function(a){a.dataset.id===secs[i].id?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current')});
+    document.getElementById('prev').disabled=i===0;document.getElementById('next').disabled=i===secs.length-1;
+    window.scrollTo(0,0);
+  }
+  function go(d){var i=idx()+d;if(i>=0&&i<secs.length)location.hash=secs[i].id}
+  document.getElementById('prev').onclick=function(){go(-1)};
+  document.getElementById('next').onclick=function(){go(1)};
+  window.addEventListener('hashchange',show);
+  document.addEventListener('keydown',function(e){if(e.key==='ArrowRight')go(1);if(e.key==='ArrowLeft')go(-1)});
+
+  var CATS=[['Managed Services','--c-ms'],['Revenue Project','--c-rev'],['COMPed','--c-comp'],['SG&A','--c-sga'],['DQ Internal Projects','--c-int'],['DQ Sustained Engineering','--c-se'],['DQ Admin','--c-adm'],['Bench',null],['PTO','--c-pto']];
+  function legend(el,cats){el.innerHTML=cats.map(function(c){return '<span><u class="'+(c[1]?'':'bench')+'" style="'+(c[1]?'background:var('+c[1]+')':'')+'"></u>'+c[0]+'</span>'}).join('')}
+  function seg(v,k,total){var c=CATS[k];var w=(v/total*100)+'%';
+    return '<i class="'+(c[1]?'':'bench')+'" style="width:'+w+';'+(c[1]?'background:var('+c[1]+')':'')+'" title="'+c[0]+': '+v+'">'+(v/total>0.05?v:'')+'</i>'}
+
+  var wk=[['This week',[16,4,1,1,1,6,7,4]],['Prior week',[15,3,1,1,1,6,7,6]],['4-wk average',[15,4,1,1,1,6,7,5]]];
+  document.getElementById('weekbars').innerHTML=wk.map(function(r){
+    var t=r[1].reduce(function(a,b){return a+b},0);
+    return '<div class="row"><div class="l">'+r[0]+'</div><div class="bar">'+r[1].map(function(v,k){return seg(v,k,40)}).join('')+'</div><div class="t">'+t+'</div></div>'}).join('');
+  legend(document.getElementById('weeklegend'),CATS.slice(0,8));
+
+  var W=640,H=270,L=44,R=26,T=16,B=36;
+  function lineChart(svg,series,y0,y1,ticks,dts,goal){
+    var n=series[0].d.length;
+    function X(i){return L+i*(W-L-R)/(n-1)}function Y(v){return T+(y1-v)*(H-T-B)/(y1-y0)}
+    var s='';
+    ticks.forEach(function(v){s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="var(--line)"/><text x="'+(L-8)+'" y="'+(Y(v)+4)+'" text-anchor="end" font-size="11">'+v+'%</text>'});
+    if(goal)s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(goal)+'" y2="'+Y(goal)+'" stroke="var(--muted)" stroke-width="2" stroke-dasharray="6 5"/>';
+    dts.forEach(function(d,i){if(d)s+='<text x="'+X(i)+'" y="'+(H-12)+'" text-anchor="middle" font-size="11">'+d+'</text>'});
+    series.forEach(function(sr){
+      var p=sr.d.map(function(v,i){return X(i)+','+Y(v)}).join(' ');
+      s+='<polyline points="'+p+'" fill="none" stroke="var(--'+sr.c+')" stroke-width="2.5" stroke-linejoin="round"/>'+sr.d.map(function(v,i){return '<circle cx="'+X(i)+'" cy="'+Y(v)+'" r="'+(i===n-1?5:3)+'" fill="var(--'+sr.c+')"/>'}).join('')+
+        '<text x="'+(X(n-1)-6)+'" y="'+(Y(sr.d[n-1])+sr.dy)+'" text-anchor="end" font-size="12" font-weight="700" style="fill:var(--'+sr.c+')">'+sr.d[n-1]+'%</text>'});
+    document.getElementById(svg).innerHTML=s}
+  var dts=['Aug 3','','','Aug 24','','','Sep 14','','','Oct 5','','','Oct 26'];
+  lineChart('trendsvg',[{d:[47,52,55,50,58,60,57,63,65,62,68,66,70],c:'c-ms',dy:18},{d:[55,60,62,58,65,68,64,70,72,69,74,71,75],c:'c-sga',dy:-10}],40,90,[40,50,60,70,80,90],dts,80);
+  lineChart('teamtrend',[{d:[52,54,55,53,57,58,57,60,61,60,62,62,63],c:'t-target',dy:-10},{d:[14,13,13,14,12,12,13,11,11,12,11,11,10],c:'t-non',dy:-8},{d:[18,18,17,18,17,17,17,17,17,16,17,16,17],c:'t-admin',dy:16},{d:[16,15,15,15,14,13,13,12,11,12,10,11,10],c:'bad',dy:18}],0,70,[0,10,20,30,40,50,60,70],dts,0);
+
+  function distChart(id,nid,P){
+    var d=document.getElementById(id),nm=document.getElementById(nid);
+    P.forEach(function(p){
+      var c=document.createElement('div');c.className='col';
+      var cols=['var(--t-target)','var(--t-non)','var(--t-admin)',null];
+      c.innerHTML=[1,2,3,4].map(function(k){var h=p[k]/40*100;return '<i style="height:'+h+'%;'+(cols[k-1]?'background:'+cols[k-1]:'background:var(--surface);border:2px solid var(--bad);box-sizing:border-box')+'" title="'+p[0]+': '+p[k]+'"></i>'}).join('');
+      d.insertBefore(c,d.querySelector('.goal'));
+      var n=document.createElement('span');n.textContent=p[0];nm.appendChild(n)})}
+  distChart('dist','distnames',[['Ana',14,10,4,12],['Ben',19,9,5,7],['Chen',22,6,6,6],['Dee',24,5,7,4],['Eli',26,4,5,5],['Faye',27,3,8,2],['Gus',28,4,6,2],['Hana',29,2,5,4],['Ivan',30,3,4,3],['Jo',31,1,6,2],['Kai',33,2,4,1],['Lena',34,1,3,2],['Mo',35,1,4,0],['Nia',37,0,2,1]]);
+  distChart('dist2','dist2names',[['Ana',14,10,4,12],['Chen',22,6,6,6],['Eli',26,4,5,5],['Gus',28,4,6,2],['Ivan',30,3,4,3],['Kai',33,2,4,1],['Mo',35,1,4,0],['Nia',37,0,2,1]]);
+
+  var M=[['Managed Services',14,13,3],['Revenue Project',7,4,0],['COMPed',0,0,1],['SG&A',1,0,1],['DQ Internal',3,0,2],['DQ Sust. Eng.',2,5,1],['DQ Admin',8,7,0],['Bench',0,0,4]];
+  var mc=document.getElementById('mixchart'),ml=document.getElementById('mixlab'),max=16;
+  M.forEach(function(m){
+    var g=document.createElement('div');g.className='g';
+    var cl=['#B8C2CB','var(--t-target)','var(--bad)'];
+    g.innerHTML=[1,2,3].map(function(k){var h=m[k]/max*88;return '<i style="height:'+(m[k]?Math.max(h,3):0)+'%;background:'+cl[k-1]+'" title="'+m[0]+': '+m[k]+'"><span style="position:relative;top:-16px">'+m[k]+'</span></i>'}).join('');
+    mc.appendChild(g);var s=document.createElement('span');s.textContent=m[0];ml.appendChild(s)});
+
+  var TB=[['Managed Services',1672],['Revenue Project',431],['DQ Sustained Engineering',630],['DQ Admin',792],['Bench',496],['PTO',324],['DQ Internal Projects',64],['SG&A',55],['COMPed',49]];
+  var idxMap={'Managed Services':0,'Revenue Project':1,'COMPed':2,'SG&A':3,'DQ Internal Projects':4,'DQ Sustained Engineering':5,'DQ Admin':6,'Bench':7,'PTO':8};
+  var ord=['Managed Services','Revenue Project','COMPed','SG&A','DQ Internal Projects','DQ Sustained Engineering','DQ Admin','Bench','PTO'];
+  var tv={};TB.forEach(function(t){tv[t[0]]=t[1]});
+  document.getElementById('teambars').innerHTML=ord.map(function(n){
+    var c=CATS[idxMap[n]],v=tv[n];
+    return '<div class="row" style="grid-template-columns:150px minmax(0,1fr) 44px"><div class="l">'+n+'</div><div class="bar" style="height:24px"><i class="'+(c[1]?'':'bench')+'" style="width:'+(v/1700*100)+'%;'+(c[1]?'background:var('+c[1]+')':'')+'"></i></div><div class="t">'+v.toLocaleString()+'</div></div>'}).join('');
+
+  var RT=[['Professional Services',100,0,0,0,0],['Project Management',95,0,5,0,0],['Service Enablement',100,0,0,0,0],['Development',30,0,50,20,0],['Field Operations',40,60,0,0,0],['Service Desk',0,100,0,0,0],['Platform Engineering',0,25,25,50,0],['Tier 3 Engineering',0,60,30,10,0],['Security Operations',0,80,15,5,0],['Data Center',5,30,30,35,0],['Product Management',0,0,0,100,0],['vCIO',5,5,0,0,90],['Solution Design Engineers',5,5,0,0,90],['Business Continuity',20,70,0,10,0],['Internal IT',0,80,10,10,0]];
+  document.getElementById('roletable').innerHTML=RT.map(function(r){return '<tr><td>'+r[0]+'</td>'+r.slice(1).map(function(v){return '<td'+(v?' style="font-weight:700"':' style="color:var(--muted)"')+'>'+(v?v+'%':'0%')+'</td>'}).join('')+'</tr>'}).join('');
+
+  var YC=[['Revenue Project',26],['Managed Services',133],['COMPed',5],['DQ Internal Projects',6],['DQ Sustained Engineering',53],['SG&A',5],['DQ Admin',56],['Bench',51],['PTO',22]];
+  document.getElementById('ycards').innerHTML='<div class="card tot"><div class="nm">TOTAL AVAILABLE HRS</div><div class="v">357</div></div>'+YC.map(function(c){return '<div class="card"><div class="nm">'+c[0].toUpperCase()+'</div><div class="v n">'+c[1]+'</div></div>'}).join('');
+  var YO=[133,26,5,5,6,53,56,51],yt2=335;
+  document.getElementById('ybar').innerHTML='<div class="row" style="grid-template-columns:70px minmax(0,1fr) 40px"><div class="l">This period</div><div class="bar">'+[133,26,5,5,6,53,56,51].map(function(v,k){return seg(v,[0,1,2,3,4,5,6,7][k],335)}).join('')+'</div><div class="t">335</div></div>';
+  legend(document.getElementById('ybarlegend'),CATS.slice(0,8));
+  var BD=[['Under 40%',22,'var(--bad)',1],['40 to 60%',14,'var(--bad)',1],['60 to 80%',12,'var(--warn)',0],['80 to 100%',26,'var(--good)',0],['100%+',3,'var(--good)',0]];
+  document.getElementById('bands').innerHTML=BD.map(function(b){return '<div><i style="height:'+(b[1]/26*88)+'%;'+(b[3]?'background:var(--surface);border:2px solid var(--bad);color:var(--bad);box-sizing:border-box':'background:'+b[2])+'">'+b[1]+'</i></div>'}).join('');
+  var bl=document.createElement('div');bl.className='bandl';bl.innerHTML=BD.map(function(b){return '<span>'+b[0]+'</span>'}).join('');document.getElementById('bands').parentNode.insertBefore(bl,document.getElementById('bands').nextSibling);
+  lineChart('ytrend',[{d:[54,55,58],c:'t-target',dy:-10},{d:[21,20,18],c:'t-non',dy:-8},{d:[15,16,15],c:'t-admin',dy:16},{d:[10,9,9],c:'bad',dy:18}],0,70,[0,10,20,30,40,50,60,70],['Sep 2026','Oct 2026','Nov 2026'],0);
+  var mc2=document.getElementById('mixchart2'),ml2=document.getElementById('mixlab2');
+  M.forEach(function(m){
+    var g=document.createElement('div');g.className='g';
+    var cl=['#B8C2CB','var(--t-target)','var(--bad)'];
+    g.innerHTML=[1,2,3].map(function(k){var h=m[k]/max*88;return '<i style="height:'+(m[k]?Math.max(h,3):0)+'%;background:'+cl[k-1]+'" title="'+m[0]+': '+m[k]+'"><span style="position:relative;top:-16px">'+m[k]+'</span></i>'}).join('');
+    mc2.appendChild(g);var s2=document.createElement('span');s2.textContent=m[0];ml2.appendChild(s2)});
+
+  show();
+})();
+</script>
